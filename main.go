@@ -1,9 +1,16 @@
 package turboSearch
 
-import "fmt"
+import (
+	"TurboEngine"
+	"fmt"
+)
 
-func main()  {
-	init()
+var (
+	turbo = TurboEngine.Engine{}
+)
+
+func main() {
+	turbo.Init()
 	turbo.AddDoc("内容")
 	DocIdList := turbo.Search("搜索")
 	fmt.Print(DocIdList)
