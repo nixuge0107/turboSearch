@@ -7,12 +7,14 @@ import (
 )
 
 var (
-	turbo    = TurboEngine.Engine{}
-	itermSet = Iterm.ItermSet{}
-	drop     = Iterm.Iterm{}
+	turbo          = TurboEngine.Engine{}
+	itermSet       = Iterm.Iterm{}
+	docItermSet    = Iterm.DocItermSet{}
+	searchItermSet = Iterm.SearchItermSet{}
 )
 
 func main() {
+	//无内容
 	turbo.Init()
 	turbo.AddDoc("内容")
 	DocIdList := turbo.Search("搜索")
@@ -20,7 +22,11 @@ func main() {
 
 	//test
 	itermSet.Init()
-	itermSet.AddIterm_test()
-	itermSet.PrintIterm_test()
+	fmt.Println("============docItermSet=============")
+	docItermSet.AddIterm_test()
+	docItermSet.PrintIterm_test()
+	fmt.Println("============searchItermSet=============")
+	searchItermSet.AddIterm_test()
+	searchItermSet.PrintIterm_test()
 
 }
