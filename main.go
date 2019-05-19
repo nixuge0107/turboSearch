@@ -9,6 +9,7 @@ import (
 var (
 	turbo    = TurboEngine.Engine{}
 	itermSet = Iterm.ItermSet{}
+	drop     = Iterm.Iterm{}
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 	fmt.Print(DocIdList)
 
 	//test
+	itermSet.Init()
 	itermSet.AddIterm_test()
 	itermSet.PrintIterm_test()
 
