@@ -1,12 +1,14 @@
-package turboSearch
+package main
 
 import (
+	"Iterm"
 	"TurboEngine"
 	"fmt"
 )
 
 var (
-	turbo = TurboEngine.Engine{}
+	turbo    = TurboEngine.Engine{}
+	itermSet = Iterm.ItermSet{}
 )
 
 func main() {
@@ -14,4 +16,9 @@ func main() {
 	turbo.AddDoc("内容")
 	DocIdList := turbo.Search("搜索")
 	fmt.Print(DocIdList)
+
+	//test
+	itermSet.AddIterm_test()
+	itermSet.PrintIterm_test()
+
 }
