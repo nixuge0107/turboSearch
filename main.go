@@ -1,6 +1,7 @@
 package main
 
 import (
+	"IndexIterm"
 	"Iterm"
 	"TurboEngine"
 	"fmt"
@@ -11,6 +12,7 @@ var (
 	itermSet       = Iterm.Iterm{}
 	docItermSet    = Iterm.DocItermSet{}
 	searchItermSet = Iterm.SearchItermSet{}
+	organizedIndex = IndexIterm.OrganizedIndex{}
 )
 
 func main() {
@@ -28,5 +30,8 @@ func main() {
 	fmt.Println("============searchItermSet=============")
 	searchItermSet.AddIterm_test()
 	searchItermSet.PrintIterm_test()
+	fmt.Println("============GoddamnIndexTest===========")
+	organizedIndex.GenerateIndex(searchItermSet)
+	organizedIndex.PrintIndexList()
 
 }
