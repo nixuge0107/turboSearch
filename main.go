@@ -3,6 +3,7 @@ package main
 import (
 	"IndexIterm"
 	"Iterm"
+	"Rank"
 	"TurboEngine"
 	"fmt"
 )
@@ -13,6 +14,7 @@ var (
 	docItermSet    = Iterm.DocItermSet{}
 	searchItermSet = Iterm.SearchItermSet{}
 	organizedIndex = IndexIterm.OrganizedIndex{}
+	searchDocList  = Rank.SearchDocList{}
 )
 
 func main() {
@@ -31,7 +33,11 @@ func main() {
 	searchItermSet.AddIterm_test()
 	searchItermSet.PrintIterm_test()
 	fmt.Println("============GoddamnIndexTest===========")
-	organizedIndex.GenerateIndex(searchItermSet)
+	organizedIndex.GenerateIndex(docItermSet)
 	organizedIndex.PrintIndexList()
+	fmt.Println("===========searchDoclistTest===========")
+	searchDocList.InitSearchDoc(searchItermSet.ItermList, organizedIndex)
+	searchDocList.GetOrganizeIndexListBySearch()
+	fmt.Println("============DocListScoreTest============")
 
 }

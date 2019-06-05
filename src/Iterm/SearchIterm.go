@@ -32,8 +32,7 @@ func (searchitermSet *SearchItermSet) AddIterm(content string, docid uint16) boo
 
 //test
 func (searchitermSet *SearchItermSet) AddIterm_test() {
-	searchitermSet.AddIterm("一般为赋值表达式，给控制变量赋初值", 1)
-	searchitermSet.AddIterm("关系表达式或逻辑表达式，循环控制条件", 2)
+	searchitermSet.AddIterm("赋值表达式", 1)
 }
 
 func (searchitermSet *SearchItermSet) PrintIterm_test() {

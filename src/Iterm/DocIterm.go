@@ -34,7 +34,7 @@ func (docitermSet *DocItermSet) AddIterm(content string, docid uint16) bool {
 func (docitermSet *DocItermSet) AddIterm_test() {
 	docitermSet.AddIterm("一般为赋值表达式，给控制变量赋初值", 1)
 	docitermSet.AddIterm("关系表达式或逻辑表达式", 2)
-
+	docitermSet.AddIterm("数学中的赋值，通过表达式来操作", 3)
 }
 
 func (docitermSet *DocItermSet) PrintIterm_test() {
