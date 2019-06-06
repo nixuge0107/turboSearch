@@ -15,9 +15,13 @@ var (
 	searchItermSet = Iterm.SearchItermSet{}
 	organizedIndex = IndexIterm.OrganizedIndex{}
 	searchDocList  = Rank.SearchDocList{}
+	scoreDocList   = Rank.ScoreDocList{}
 )
 
 func main() {
+	var content = []string{"一般为赋值表达式，给控制变量赋初值", "关系表达式或逻辑表达式", "数学中的赋值，通过表达式来操作"}
+	var content_index uint16 = 0
+	var searchDoc = "赋值表达式"
 	//无内容
 	turbo.Init()
 	turbo.AddDoc("内容")
@@ -27,10 +31,13 @@ func main() {
 	//test
 	itermSet.Init()
 	fmt.Println("============docItermSet=============")
-	docItermSet.AddIterm_test()
+	for index := 0; index < len(content); index++ {
+		docItermSet.AddIterm(content[index], uint16(index))
+	}
+	docItermSet.AddIterm("数学中的赋值，通过表达式来操作", content_index)
 	docItermSet.PrintIterm_test()
 	fmt.Println("============searchItermSet=============")
-	searchItermSet.AddIterm_test()
+	searchItermSet.AddIterm(searchDoc, 0)
 	searchItermSet.PrintIterm_test()
 	fmt.Println("============GoddamnIndexTest===========")
 	organizedIndex.GenerateIndex(docItermSet)
@@ -38,6 +45,11 @@ func main() {
 	fmt.Println("===========searchDoclistTest===========")
 	searchDocList.InitSearchDoc(searchItermSet.ItermList, organizedIndex)
 	searchDocList.GetOrganizeIndexListBySearch()
+	fmt.Println(searchDocList.SearchDocIdList)
+	fmt.Println(searchDocList.SearchIndexItermList)
 	fmt.Println("============DocListScoreTest============")
+	scoreDocList.InitScoreList(searchDocList)
+	scoreDocList.GetScore()
+	fmt.Println(scoreDocList.ScoreLists)
 
 }
