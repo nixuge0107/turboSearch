@@ -21,9 +21,9 @@ func (scoreList *ScoreDocList) InitScoreList(searchDocList SearchDocList) {
 
 func (scoreList *ScoreDocList) GetScore() {
 	for _, docid := range scoreList.DocList.SearchDocIdList {
-		var itermLocations []IndexIterm.OrganizedLocation
+		var itermLocations []IndexIterm.Org3
 		for _, indexiterm := range scoreList.DocList.SearchIndexItermList {
-			for _, indexloc := range indexiterm.OrganizedLocation {
+			for _, indexloc := range indexiterm.Org3 {
 				if docid == indexloc.DocId {
 					itermLocations = append(itermLocations, indexloc)
 				}
@@ -37,7 +37,7 @@ func (scoreList *ScoreDocList) GetScore() {
 }
 
 //随便写的积分规则。。。
-func (scoreList *ScoreDocList) GetScoreFromLocation(itermlocations []IndexIterm.OrganizedLocation) float64 {
+func (scoreList *ScoreDocList) GetScoreFromLocation(itermlocations []IndexIterm.Org3) float64 {
 	var distance float64 = 0
 	var lastdistance float64 = 0
 	var freq uint16 = 0

@@ -5,93 +5,93 @@ import (
 	"fmt"
 )
 
-type OrganizedIndex struct {
-	keyword              string
-	OrganizedIndexItem   []OrganizedIndexItem
+type Org1 struct {
+	keyword                string
+	Org2                 []Org2
 	ItemList             []Iterm.Iterm
-	SumorganizedLocation uint16
+	SumorganizedLocation   uint16
 }
 
-type OrganizedIndexItem struct {
-	Keyword           string
-	OrganizedLocation []OrganizedLocation
-	Freq              float32
-	SumLoc            uint16
+type Org2 struct {
+	Keyword                string
+	Org3                 []Org3
+	Freq                   float32
+	SumLoc                 uint16
 }
 
-type OrganizedLocation struct {
-	Location  []int
-	DocId     uint16
-	SumDocLoc uint16
+type Org3 struct {
+	Location             []int
+	DocId                  uint16
+	SumDocLoc              uint16
 }
 
-func (organizedIndex *OrganizedIndex) InitIndex(inputIterm Iterm.DocItermSet) {
-	organizedIndex.keyword = "null"
-	organizedIndex.ItemList = inputIterm.ItermList
+func (org1 *Org1) InitIndex(inputIterm Iterm.DocItermSet) {
+	org1.keyword  = "null"
+	org1.ItemList = inputIterm.ItermList
 }
 
-func (organizedIndex *OrganizedIndex) SetKeyword(inputKeyword string) {
-	organizedIndex.keyword = inputKeyword
+func (org1 *Org1) SetKeyword(inputKeyword string) {
+	org1.keyword = inputKeyword
 }
 
-func (organizedIndex *OrganizedIndex) GenerateIndex(inputIterm Iterm.DocItermSet) {
+func (org1 *Org1) GenerateIndex(inputIterm Iterm.DocItermSet) {
 	for i, item := range inputIterm.ItermList {
 		if i == 0 {
-			OrganizedLocation := OrganizedLocation{}
-			OrganizedLocation.Location = append(OrganizedLocation.Location, item.Location)
-			OrganizedLocation.SumDocLoc = 1
-			OrganizedLocation.DocId = item.DocId
-			OrganizedIndexItem := OrganizedIndexItem{}
-			OrganizedIndexItem.OrganizedLocation = append(OrganizedIndexItem.OrganizedLocation, OrganizedLocation)
-			OrganizedIndexItem.Keyword = item.Keyword
-			OrganizedIndexItem.SumLoc = 1
-			OrganizedIndexItem.Freq = item.Freq
-			organizedIndex.keyword = "null"
-			organizedIndex.ItemList = inputIterm.ItermList
-			organizedIndex.OrganizedIndexItem = append(organizedIndex.OrganizedIndexItem, OrganizedIndexItem)
-			organizedIndex.SumorganizedLocation = 1
+			Org3                      := Org3{}
+			Org3.Location              = append(Org3.Location, item.Location)
+			Org3.DocId                 = item.DocId
+			Org3.SumDocLoc             = 1
+			Org2                      := Org2{}
+			Org2.Org3                  = append(Org2.Org3, Org3)
+			Org2.Keyword               = item.Keyword
+			Org2.SumLoc                = 1
+			Org2.Freq                  = item.Freq
+			org1.keyword               = "null"
+			org1.ItemList              = inputIterm.ItermList
+			org1.Org2                  = append(org1.Org2, Org2)
+			org1.SumorganizedLocation  = 1
 			fmt.Println(item)
 			fmt.Println("done")
 			continue
 		}
-		if organizedIndex.isInIndex(item.Keyword) {
-			indexWhere := organizedIndex.isInIndexWhere(item.Keyword)
-			if organizedIndex.isInDocID(item.DocId, indexWhere) {
-				docWhere := organizedIndex.isInDocIDWhere(item.DocId, indexWhere)
-				organizedIndex.OrganizedIndexItem[indexWhere].OrganizedLocation[docWhere].Location = append(organizedIndex.OrganizedIndexItem[indexWhere].OrganizedLocation[docWhere].Location, item.Location)
-				organizedIndex.OrganizedIndexItem[indexWhere].OrganizedLocation[docWhere].SumDocLoc++
+		if org1.isInIndex(item.Keyword) {
+			indexWhere := org1.isInIndexWhere(item.Keyword)
+			if org1.isInDocID(item.DocId, indexWhere) {
+				docWhere := org1.isInDocIDWhere(item.DocId, indexWhere)
+				org1.Org2[indexWhere].Org3[docWhere].Location = append(org1.Org2[indexWhere].Org3[docWhere].Location, item.Location)
+				org1.Org2[indexWhere].Org3[docWhere].SumDocLoc++
 			} else {
-				OrganizedLocation := OrganizedLocation{}
-				OrganizedLocation.Location = append(OrganizedLocation.Location, item.Location)
-				OrganizedLocation.SumDocLoc = 1
-				OrganizedLocation.DocId = item.DocId
-				organizedIndex.OrganizedIndexItem[indexWhere].OrganizedLocation = append(organizedIndex.OrganizedIndexItem[indexWhere].OrganizedLocation, OrganizedLocation)
-				organizedIndex.OrganizedIndexItem[indexWhere].SumLoc++
+				Org3                         := Org3{}
+				Org3.Location                 = append(Org3.Location, item.Location)
+				Org3.SumDocLoc                = 1
+				Org3.DocId                    = item.DocId
+				org1.Org2[indexWhere].Org3    = append(org1.Org2[indexWhere].Org3, Org3)
+				org1.Org2[indexWhere].SumLoc++
 			}
 		} else {
-			OrganizedLocation := OrganizedLocation{}
-			OrganizedLocation.Location = append(OrganizedLocation.Location, item.Location)
-			OrganizedLocation.SumDocLoc = 1
-			OrganizedLocation.DocId = item.DocId
-			OrganizedIndexItem := OrganizedIndexItem{}
-			OrganizedIndexItem.OrganizedLocation = append(OrganizedIndexItem.OrganizedLocation, OrganizedLocation)
-			OrganizedIndexItem.Keyword = item.Keyword
-			OrganizedIndexItem.SumLoc = 1
-			OrganizedIndexItem.Freq = item.Freq
-			organizedIndex.keyword = "null"
-			organizedIndex.ItemList = inputIterm.ItermList
-			organizedIndex.OrganizedIndexItem = append(organizedIndex.OrganizedIndexItem, OrganizedIndexItem)
-			organizedIndex.SumorganizedLocation++
+			Org3             := Org3{}
+			Org3.Location     = append(Org3.Location, item.Location)
+			Org3.DocId        = item.DocId
+			Org3.SumDocLoc    = 1
+			Org2             := Org2{}
+			Org2.Org3         = append(Org2.Org3, Org3)
+			Org2.Keyword      = item.Keyword
+			Org2.SumLoc       = 1
+			Org2.Freq         = item.Freq
+			org1.keyword      = "null"
+			org1.ItemList     = inputIterm.ItermList
+			org1.Org2         = append(org1.Org2, Org2)
+			org1.SumorganizedLocation++
 		}
 		fmt.Println(item)
 		fmt.Println("done")
 	}
 }
 
-func (organizedIndex *OrganizedIndex) PrintIndexList() {
-	for _, item := range organizedIndex.OrganizedIndexItem {
+func (org1 *Org1) PrintIndexList() {
+	for _, item := range org1.Org2 {
 		fmt.Println("the keyword:" + item.Keyword)
-		for _, jtem := range item.OrganizedLocation {
+		for _, jtem := range item.Org3 {
 			fmt.Print("doc id ->")
 			fmt.Print(jtem.DocId)
 			fmt.Println("\n    Loc List:---")
@@ -103,8 +103,8 @@ func (organizedIndex *OrganizedIndex) PrintIndexList() {
 	}
 }
 
-func (organizedIndex *OrganizedIndex) isInIndexWhere(inputKeyword string) int {
-	for i, item := range organizedIndex.OrganizedIndexItem {
+func (org1 *Org1) isInIndexWhere(inputKeyword string) int {
+	for i, item := range org1.Org2 {
 		if inputKeyword == item.Keyword {
 			return i
 		}
@@ -112,8 +112,8 @@ func (organizedIndex *OrganizedIndex) isInIndexWhere(inputKeyword string) int {
 	return 0xffff
 }
 
-func (organizedIndex *OrganizedIndex) isInDocIDWhere(inputDocID uint16, inputIndexWhere int) int {
-	for i, item := range organizedIndex.OrganizedIndexItem[inputIndexWhere].OrganizedLocation {
+func (org1 *Org1) isInDocIDWhere(inputDocID uint16, inputIndexWhere int) int {
+	for i, item := range org1.Org2[inputIndexWhere].Org3 {
 		if item.DocId == inputDocID {
 			return i
 		}
@@ -121,8 +121,8 @@ func (organizedIndex *OrganizedIndex) isInDocIDWhere(inputDocID uint16, inputInd
 	return 0xffff
 }
 
-func (organizedIndex *OrganizedIndex) isInIndex(inputKeyword string) bool {
-	for _, item := range organizedIndex.OrganizedIndexItem {
+func (org1 *Org1) isInIndex(inputKeyword string) bool {
+	for _, item := range org1.Org2 {
 		if inputKeyword == item.Keyword {
 			return true
 		}
@@ -130,8 +130,8 @@ func (organizedIndex *OrganizedIndex) isInIndex(inputKeyword string) bool {
 	return false
 }
 
-func (organizedIndex *OrganizedIndex) isInDocID(inputDocID uint16, inputIndexWhere int) bool {
-	for _, item := range organizedIndex.OrganizedIndexItem[inputIndexWhere].OrganizedLocation {
+func (org1 *Org1) isInDocID(inputDocID uint16, inputIndexWhere int) bool {
+	for _, item := range org1.Org2[inputIndexWhere].Org3 {
 		if item.DocId == inputDocID {
 			return true
 		}

@@ -13,14 +13,13 @@ var (
 	itermSet       = Iterm.Iterm{}
 	docItermSet    = Iterm.DocItermSet{}
 	searchItermSet = Iterm.SearchItermSet{}
-	organizedIndex = IndexIterm.OrganizedIndex{}
+	organizedIndex = IndexIterm.Org1{}
 	searchDocList  = Rank.SearchDocList{}
 	scoreDocList   = Rank.ScoreDocList{}
 )
 
 func main() {
 	var content = []string{"一般为赋值表达式，给控制变量赋初值", "关系表达式或逻辑表达式", "数学中的赋值，通过表达式来操作"}
-	var content_index uint16 = 0
 	var searchDoc = "赋值表达式"
 	//无内容
 	turbo.Init()
@@ -34,7 +33,7 @@ func main() {
 	for index := 0; index < len(content); index++ {
 		docItermSet.AddIterm(content[index], uint16(index))
 	}
-	docItermSet.AddIterm("数学中的赋值，通过表达式来操作", content_index)
+	docItermSet.NumOfDocs = len(content)
 	docItermSet.PrintIterm_test()
 	fmt.Println("============searchItermSet=============")
 	searchItermSet.AddIterm(searchDoc, 0)

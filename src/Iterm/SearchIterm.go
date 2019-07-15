@@ -31,9 +31,9 @@ func (searchitermSet *SearchItermSet) AddIterm(content string, docid uint16) boo
 }
 
 //test
-func (searchitermSet *SearchItermSet) AddIterm_test() {
-	searchitermSet.AddIterm("赋值表达式", 1)
-}
+// func (searchitermSet *SearchItermSet) AddIterm_test() {
+// 	searchitermSet.AddIterm("赋值表达式", 1)
+// }
 
 func (searchitermSet *SearchItermSet) PrintIterm_test() {
 	fmt.Print(searchitermSet.Sum)
