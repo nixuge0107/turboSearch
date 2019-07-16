@@ -30,17 +30,19 @@ func (scoreList *ScoreDocList) Bm25score(){
 		temp.DocId = uint16(i)
 		scoreList.ScoreLists = append(scoreList.ScoreLists, temp)
 	}
-	for _, item := range scoreList.DocList.SearchIndexItermList{
+	for _, item := range scoreList.DocList.OrganizeIndexList{
 		for _, itemOrg3 := range item.Org3{
 			// fmt.Println(item.SumLoc)
 			// score := math.Log((float64(N)+0.5)/(float64(item.SumLoc)+0.5))
 			// fmt.Println(score)
 			DocID := itemOrg3.DocId
-			// fmt.Println(DocID)
+			
 			for j, itemScore := range scoreList.ScoreLists{
 				if DocID == itemScore.DocId{
+					fmt.Println(j)
 					fmt.Println("check")
 					scoreList.ScoreLists[j].Score += math.Log((float64(N)+0.5)/(float64(item.SumLoc)+0.5))
+					fmt.Println(math.Log((float64(N)+0.5)/(float64(item.SumLoc)+0.5)))
 					fmt.Println(scoreList.ScoreLists)
 				} 
 			}

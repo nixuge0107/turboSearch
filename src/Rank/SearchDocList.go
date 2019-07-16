@@ -38,6 +38,8 @@ func (searchDocList *SearchDocList) GetOrganizeIndexList() {
 		organizedIndexIterms = append(organizedIndexIterms, organizedIndexIterm)
 	}
 	searchDocList.OrganizeIndexList = organizedIndexIterms
+	fmt.Println("notice")
+	fmt.Println(searchDocList.OrganizeIndexList)
 }
 
 func (searchDocList *SearchDocList) GetIndexItermBySearchKeyword(keyword string) IndexIterm.Org2 {
