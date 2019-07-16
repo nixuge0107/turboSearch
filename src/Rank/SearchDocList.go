@@ -12,12 +12,14 @@ type SearchDocList struct {
 	OrganizeIndexList    []IndexIterm.Org2
 	SearchDocIdList      []uint16
 	SearchIndexItermList []IndexIterm.Org2
+	NumOfDocs              int
 }
 
-func (searchDocList *SearchDocList) InitSearchDoc(searchIterm []Iterm.Iterm, organizedIndex IndexIterm.Org1) {
+func (searchDocList *SearchDocList) InitSearchDoc(searchIterm []Iterm.Iterm, organizedIndex IndexIterm.Org1, numOfDocs int) {
 	searchDocList.Org1              = organizedIndex
 	searchDocList.SearchItermList   = searchIterm
 	searchDocList.OrganizeIndexList = nil
+	searchDocList.NumOfDocs         = numOfDocs
 }
 
 //获得包含所有关键词的indexitermlist
@@ -98,6 +100,7 @@ func (searchDocList *SearchDocList) GetSearchIndexListByDoclist() {
 		var searchIndexIterm IndexIterm.Org2
 		searchIndexIterm.Keyword = indexIterm.Keyword
 		searchIndexIterm.Freq = indexIterm.Freq
+		searchIndexIterm.SumLoc = indexIterm.SumLoc
 		for _, location := range indexIterm.Org3 {
 			for _, docid := range searchDocList.SearchDocIdList {
 				if docid == location.DocId {

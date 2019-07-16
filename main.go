@@ -20,7 +20,7 @@ var (
 
 func main() {
 	var content = []string{"一般为赋值表达式，给控制变量赋初值", "关系表达式或逻辑表达式", "数学中的赋值，通过表达式来操作"}
-	var searchDoc = "赋值表达式"
+	var searchDoc = "赋值表达式赋值"
 	//无内容
 	turbo.Init()
 	turbo.AddDoc("内容")
@@ -42,13 +42,14 @@ func main() {
 	organizedIndex.GenerateIndex(docItermSet)
 	organizedIndex.PrintIndexList()
 	fmt.Println("===========searchDoclistTest===========")
-	searchDocList.InitSearchDoc(searchItermSet.ItermList, organizedIndex)
+	searchDocList.InitSearchDoc(searchItermSet.ItermList, organizedIndex, docItermSet.NumOfDocs)
 	searchDocList.GetOrganizeIndexListBySearch()
 	fmt.Println(searchDocList.SearchDocIdList)
 	fmt.Println(searchDocList.SearchIndexItermList)
 	fmt.Println("============DocListScoreTest============")
 	scoreDocList.InitScoreList(searchDocList)
-	scoreDocList.GetScore()
-	fmt.Println(scoreDocList.ScoreLists)
+	// scoreDocList.GetScore()
+	// fmt.Println(scoreDocList.ScoreLists)
+	scoreDocList.Bm25score()
 
 }

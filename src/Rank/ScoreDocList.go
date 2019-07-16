@@ -3,6 +3,7 @@ package Rank
 import (
 	"IndexIterm"
 	"math"
+	"fmt"
 )
 
 type ScoreDoc struct {
@@ -12,11 +13,40 @@ type ScoreDoc struct {
 
 type ScoreDocList struct {
 	ScoreLists []ScoreDoc
-	DocList    SearchDocList
+	DocList      SearchDocList
 }
 
 func (scoreList *ScoreDocList) InitScoreList(searchDocList SearchDocList) {
 	scoreList.DocList = searchDocList
+}
+
+func (scoreList *ScoreDocList) Bm25score(){
+	fmt.Println(scoreList.DocList.SearchIndexItermList)
+	N := scoreList.DocList.NumOfDocs
+	// var score float64
+	for i:=0 ; i < N ; i++ {
+		temp := ScoreDoc{}
+		temp.Score = 0
+		temp.DocId = uint16(i)
+		scoreList.ScoreLists = append(scoreList.ScoreLists, temp)
+	}
+	for _, item := range scoreList.DocList.SearchIndexItermList{
+		for _, itemOrg3 := range item.Org3{
+			// fmt.Println(item.SumLoc)
+			// score := math.Log((float64(N)+0.5)/(float64(item.SumLoc)+0.5))
+			// fmt.Println(score)
+			DocID := itemOrg3.DocId
+			// fmt.Println(DocID)
+			for j, itemScore := range scoreList.ScoreLists{
+				if DocID == itemScore.DocId{
+					fmt.Println("check")
+					scoreList.ScoreLists[j].Score += math.Log((float64(N)+0.5)/(float64(item.SumLoc)+0.5))
+					fmt.Println(scoreList.ScoreLists)
+				} 
+			}
+		}
+	}
+	fmt.Println(scoreList.ScoreLists)
 }
 
 func (scoreList *ScoreDocList) GetScore() {
