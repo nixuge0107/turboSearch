@@ -1,4 +1,4 @@
-package Iterm
+package Item
 
 import (
 	"bufio"
@@ -14,7 +14,7 @@ type dropWords struct {
 }
 
 func (dropWord *dropWords) Init(file string) {
-	dropWord.dropwords = dropWord.loadDropDictionary("src/data/drop_word.txt")
+	dropWord.dropwords = dropWord.loadDropDictionary( file )
 }
 
 func (dropWord *dropWords) loadDropDictionary(file string) []string {

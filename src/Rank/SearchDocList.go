@@ -1,62 +1,62 @@
 package Rank
 
 import (
-	"IndexIterm"
-	"Iterm"
+	"IndexItem"
+	"Item"
 	"fmt"
 )
 
 type SearchDocList struct {
-	Org1                   IndexIterm.Org1
-	SearchItermList      []Iterm.Iterm
-	OrganizeIndexList    []IndexIterm.Org2
+	Org1                   IndexItem.Org1
+	SearchItemList       []Item.Item
+	OrganizeIndexList    []IndexItem.Org2
 	SearchDocIdList      []uint16
-	SearchIndexItermList []IndexIterm.Org2
+	SearchIndexItemList  []IndexItem.Org2
 	NumOfDocs              int
 }
 
-func (searchDocList *SearchDocList) InitSearchDoc(searchIterm []Iterm.Iterm, organizedIndex IndexIterm.Org1, numOfDocs int) {
+func (searchDocList *SearchDocList) InitSearchDoc(searchItem []Item.Item, organizedIndex IndexItem.Org1, numOfDocs int) {
 	searchDocList.Org1              = organizedIndex
-	searchDocList.SearchItermList   = searchIterm
+	searchDocList.SearchItemList    = searchItem
 	searchDocList.OrganizeIndexList = nil
 	searchDocList.NumOfDocs         = numOfDocs
 }
 
-//获得包含所有关键词的indexitermlist
+//获得包含所有关键词的indexitemlist
 func (searchDocList *SearchDocList) GetOrganizeIndexListBySearch() {
 	searchDocList.GetOrganizeIndexList()
-	temp := searchDocList.GetDocListFromIndexIterms()
+	temp := searchDocList.GetDocListFromIndexItems()
 	searchDocList.SearchDocIdList = searchDocList.GetSameDocid(temp)
 	searchDocList.GetSearchIndexListByDoclist()
-	fmt.Println(searchDocList.SearchIndexItermList)
+	fmt.Println(searchDocList.SearchIndexItemList)
 }
 
 func (searchDocList *SearchDocList) GetOrganizeIndexList() {
-	var organizedIndexIterms []IndexIterm.Org2
-	for _, iterm := range searchDocList.SearchItermList {
-		organizedIndexIterm := searchDocList.GetIndexItermBySearchKeyword(iterm.Keyword)
-		organizedIndexIterms = append(organizedIndexIterms, organizedIndexIterm)
+	var organizedIndexItems []IndexItem.Org2
+	for _, item := range searchDocList.SearchItemList {
+		organizedIndexItem := searchDocList.GetIndexItemBySearchKeyword(item.Keyword)
+		organizedIndexItems = append(organizedIndexItems, organizedIndexItem)
 	}
-	searchDocList.OrganizeIndexList = organizedIndexIterms
+	searchDocList.OrganizeIndexList = organizedIndexItems
 	fmt.Println("notice")
 	fmt.Println(searchDocList.OrganizeIndexList)
 }
 
-func (searchDocList *SearchDocList) GetIndexItermBySearchKeyword(keyword string) IndexIterm.Org2 {
-	var organizedIndexItem IndexIterm.Org2
-	for _, indexIterm := range searchDocList.Org1.Org2 {
-		if keyword == indexIterm.Keyword {
-			organizedIndexItem = indexIterm
+func (searchDocList *SearchDocList) GetIndexItemBySearchKeyword(keyword string) IndexItem.Org2 {
+	var organizedIndexItem IndexItem.Org2
+	for _, indexItem := range searchDocList.Org1.Org2 {
+		if keyword == indexItem.Keyword {
+			organizedIndexItem = indexItem
 		}
 	}
 	return organizedIndexItem
 }
 
-func (searchDocList *SearchDocList) GetDocListFromIndexIterms() [][]uint16 {
+func (searchDocList *SearchDocList) GetDocListFromIndexItems() [][]uint16 {
 	var docs [][]uint16
-	for _, iterms := range searchDocList.OrganizeIndexList {
+	for _, items := range searchDocList.OrganizeIndexList {
 		var doc []uint16
-		for _, loc := range iterms.Org3 {
+		for _, loc := range items.Org3 {
 			doc = append(doc, loc.DocId)
 		}
 		docs = append(docs, doc)
@@ -64,7 +64,7 @@ func (searchDocList *SearchDocList) GetDocListFromIndexIterms() [][]uint16 {
 	return docs
 }
 
-func (searchDocList *SearchDocList) PrintIndexIterm() {
+func (searchDocList *SearchDocList) PrintIndexItem() {
 	for _, indexList := range searchDocList.OrganizeIndexList {
 		fmt.Println(indexList.Org3)
 	}
@@ -97,21 +97,21 @@ func (searchDocList *SearchDocList) getSame(this []uint16, last []uint16) []uint
 }
 
 func (searchDocList *SearchDocList) GetSearchIndexListByDoclist() {
-	var searchIndexItermList []IndexIterm.Org2
-	for _, indexIterm := range searchDocList.OrganizeIndexList {
-		var searchIndexIterm IndexIterm.Org2
-		searchIndexIterm.Keyword = indexIterm.Keyword
-		searchIndexIterm.Freq = indexIterm.Freq
-		searchIndexIterm.SumLoc = indexIterm.SumLoc
-		for _, location := range indexIterm.Org3 {
+	var searchIndexItemList []IndexItem.Org2
+	for _, indexItem := range searchDocList.OrganizeIndexList {
+		var searchIndexItem IndexItem.Org2
+		searchIndexItem.Keyword = indexItem.Keyword
+		searchIndexItem.Freq    = indexItem.Freq
+		searchIndexItem.SumLoc  = indexItem.SumLoc
+		for _, location := range indexItem.Org3 {
 			for _, docid := range searchDocList.SearchDocIdList {
 				if docid == location.DocId {
-					searchIndexIterm.Org3 = append(searchIndexIterm.Org3, location)
+					searchIndexItem.Org3 = append(searchIndexItem.Org3, location)
 				}
 			}
 		}
 
-		searchIndexItermList = append(searchIndexItermList, searchIndexIterm)
+		searchIndexItemList = append(searchIndexItemList, searchIndexItem)
 	}
-	searchDocList.SearchIndexItermList = searchIndexItermList
+	searchDocList.SearchIndexItemList = searchIndexItemList
 }

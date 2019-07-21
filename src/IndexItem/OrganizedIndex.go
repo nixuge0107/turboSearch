@@ -1,14 +1,14 @@
-package IndexIterm
+package IndexItem
 
 import (
-	"Iterm"
+	"Item"
 	"fmt"
 )
 
 type Org1 struct {
 	keyword                string
 	Org2                 []Org2
-	ItemList             []Iterm.Iterm
+	ItemList             []Item.Item
 	SumorganizedLocation   uint16
 }
 
@@ -25,17 +25,17 @@ type Org3 struct {
 	SumDocLoc              uint16
 }
 
-func (org1 *Org1) InitIndex(inputIterm Iterm.DocItermSet) {
+func (org1 *Org1) InitIndex(inputItem Item.DocItemSet) {
 	org1.keyword  = "null"
-	org1.ItemList = inputIterm.ItermList
+	org1.ItemList = inputItem.ItemList
 }
 
 func (org1 *Org1) SetKeyword(inputKeyword string) {
 	org1.keyword = inputKeyword
 }
 
-func (org1 *Org1) GenerateIndex(inputIterm Iterm.DocItermSet) {
-	for i, item := range inputIterm.ItermList {
+func (org1 *Org1) GenerateIndex(inputItem Item.DocItemSet) {
+	for i, item := range inputItem.ItemList {
 		if i == 0 {
 			Org3                      := Org3{}
 			Org3.Location              = append(Org3.Location, item.Location)
@@ -47,7 +47,7 @@ func (org1 *Org1) GenerateIndex(inputIterm Iterm.DocItermSet) {
 			Org2.SumLoc                = 1
 			Org2.Freq                  = item.Freq
 			org1.keyword               = "null"
-			org1.ItemList              = inputIterm.ItermList
+			org1.ItemList              = inputItem.ItemList
 			org1.Org2                  = append(org1.Org2, Org2)
 			org1.SumorganizedLocation  = 1
 			fmt.Println(item)
@@ -79,7 +79,7 @@ func (org1 *Org1) GenerateIndex(inputIterm Iterm.DocItermSet) {
 			Org2.SumLoc       = 1
 			Org2.Freq         = item.Freq
 			org1.keyword      = "null"
-			org1.ItemList     = inputIterm.ItermList
+			org1.ItemList     = inputItem.ItemList
 			org1.Org2         = append(org1.Org2, Org2)
 			org1.SumorganizedLocation++
 		}
